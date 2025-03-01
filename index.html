@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventarios de HAPPY´S</title>
+    <link rel="stylesheet" type="text/css" href="css/estilo.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="logo">
+        <img src="img/HAPPY’S.jpg" alt="Logo">
+    </div>
+    <nav>
+        <ul>
+            
+            <li class="accessibility-dropdown">
+                <a href="#" aria-haspopup="true" aria-expanded="false">Accesibilidad</a>
+                <ul class="accessibility-menu">
+                    <li><button class="accessibility-button" id="high-contrast">Alto Contraste</button></li>
+                    <li><button class="accessibility-button" id="dyslexia-mode">Modo Dislexia</button></li>
+                    <li><button class="accessibility-button" id="larger-font">Aumentar Fuente</button></li>
+                    <li><button class="accessibility-button" id="read-aloud">Leer en Voz Alta</button></li>
+                    <li><button class="accessibility-button" id="pause-read-aloud">Pausar Lectura</button></li>
+                    <li><button class="accessibility-button" id="resume-read-aloud">Reanudar Lectura</button></li>
+                    <li><button class="accessibility-button" id="magnify">Ampliar Pantalla</button></li>
+                    <li> <button onclick="window.print()">Descargar como PDF</button></button></li>
+                
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+   
+    <h1>Inventarios</h1>
+
+    <h2>Añadir Producto</h2>
+    <form id="productForm">
+        <label for="codigo">Código:</label>
+        <input type="text" id="codigo" name="codigo" required><br><br>
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" name="descripcion" required><br><br>
+
+        <label for="categoria">Categoría:</label>
+        <input type="text" id="categoria" name="categoria" required><br><br>
+
+        <label for="precio_compra">Precio Compra:</label>
+        <input type="number" id="precio_compra" name="precio_compra" required><br><br>
+
+        <label for="precio_venta">Precio Venta:</label>
+        <input type="number" id="precio_venta" name="precio_venta" required><br><br>
+
+        <label for="stock">Stock:</label>
+        <input type="number" id="stock" name="stock" required><br><br>
+
+        <label for="stock_minimo">Stock Mínimo:</label>
+        <input type="number" id="stock_minimo" name="stock_minimo" required><br><br>
+
+        <label for="iva">IVA:</label>
+        <input type="number" step="0.01" id="iva" name="iva" required><br><br>
+
+        <label for="costo_docena">Costo Docena:</label>
+        <input type="number" id="costo_docena" name="costo_docena" required><br><br>
+
+        <label for="fecha_ingreso">Fecha de Ingreso:</label>
+        <input type="date" id="fecha_ingreso" name="fecha_ingreso" required><br><br>
+
+        <button type="button" onclick="agregarProducto()">Agregar Producto</button>
+    </form>
+
+    <hr>
+
+    <h2>Registrar salida⁄entrada de Inventario</h2>
+    <label for="codigo_movimiento">Código del Producto:</label>
+    <input type="text" id="codigo_movimiento" name="codigo_movimiento"><br><br>
+
+    <label for="cantidad_movimiento">Cantidad:</label>
+    <input type="number" id="cantidad_movimiento" name="cantidad_movimiento"><br><br>
+
+    <label for="tipo_movimiento">Tipo de Movimiento:</label>
+    <select id="tipo_movimiento" name="tipo_movimiento">
+        <option value="entrada">Entrada</option>
+        <option value="salida">Salida</option>
+    </select><br><br>
+
+    <button type="button" onclick="registrarMovimientoDesdeFormulario()">Registrar Movimiento</button>
+
+    <hr>
+
+    <h2>Buscar Productos</h2>
+    <input type="text" id="busqueda" placeholder="Buscar por código, nombre o categoría" oninput="buscarProductos()"><br><br>
+    <h1>Verificación de Stock Bajo</h1>
+    <p>Haz clic en el botón para verificar si algún producto tiene stock bajo:</p>
+    <button onclick="verificarStockBajo()">Verificar Stock Bajo</button>
+    <h2>Filtrar Productos</h2>
+    <label for="filtro_categoria">Categoría:</label>
+    <input type="text" id="filtro_categoria"><br><br>
+
+    <label for="filtro_precio_min">Precio Mínimo:</label>
+    <input type="number" id="filtro_precio_min"><br><br>
+
+    <label for="filtro_precio_max">Precio Máximo:</label>
+    <input type="number" id="filtro_precio_max"><br><br>
+
+    <label for="filtro_stock">Stock Mínimo:</label>
+    <input type="number" id="filtro_stock"><br><br>
+
+    <label for="filtro_fecha">Fecha de Ingreso:</label>
+    <input type="date" id="filtro_fecha"><br><br>
+
+    <button type="button" onclick="filtrarProductos()">Filtrar</button>
+
+    <hr>
+
+    <h2>Lista de Productos</h2>
+    <table id="productTable">
+        <caption>Lista de productos en inventario</caption>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Categoría</th>
+                <th>Precio Compra</th>
+                <th>Precio Venta</th>
+                <th>Stock</th>
+                <th>Stock Mínimo</th>
+                <th>IVA</th>
+                <th>Costo Docena</th>
+                <th>Fecha Ingreso</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            </tbody>
+    </table>
+    <button onclick="productosProximosAgotarse()">Ver productos próximos a agotarse</button>
+   
+
+  <!-- los margenes de graficos -->
+<div id="chartContainer">
+    <canvas id="margenGananciaChart"></canvas>
+</div>
+    
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Inventarios de HAPPY´S. Todos los derechos reservados.</p>
+            <div class="social-icons">
+                <!-- Iconos sociales en blanco -->
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-youtube"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/javascript.js"></script>
+</body>
+</html>
